@@ -6,6 +6,11 @@
         <title>Historias de usuario</title>
     </h:head>
     <h:body>
-        <h:commandButton value="HU1" action="?faces-redirect=true" />
+        <h:form id="bienvenidaMenu">
+            <h:outputText value="Hola, " />
+            <h:outputText value="#{usuarioCDI.usuario.nombre}" style="font-weight:bold;" />
+            &nbsp;|&nbsp;
+            <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
+        </h:form>
     </h:body>
 </html>

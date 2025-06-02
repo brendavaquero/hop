@@ -43,21 +43,28 @@ public class ObjetivoAhorroCDI implements Serializable {
     private List<AportesObjetivo> historialAportes;
     private ObjetivosAhorro objetivoParaHistorial;
 
-
     @PostConstruct
     public void init() {
         nuevoObjetivo = new ObjetivosAhorro();
-        listaObjetivos = new ArrayList<>();
+        cargarObjetivos();
     }
 
+    /*public void cargarObjetivos() {
+        Usuarios usuario = usuarioCDI.getUsuario();
+        if (usuario != null) {
+            listaObjetivos = objetivoAhorroDAO.obtenerPorUsuario(usuario);
+        }
+    }*/
+    
     public void cargarObjetivos() {
-        Usuarios u = usuarioCDI.getUsuario();
-        if (u != null) {
-            listaObjetivos = objetivoAhorroDAO.obtenerPorUsuario(u);
+        Usuarios usuario = usuarioCDI.getUsuario(); //usuario log
+        if (usuario != null) {
+            listaObjetivos = objetivoAhorroDAO.obtenerPorUsuario(usuario);
         } else {
             listaObjetivos = new ArrayList<>();
         }
     }
+
 
     public void guardarObjetivo() {
         Usuarios u = usuarioCDI.getUsuario();

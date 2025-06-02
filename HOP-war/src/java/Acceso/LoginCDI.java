@@ -39,14 +39,14 @@ public class LoginCDI implements Serializable {
         Usuarios u = usuariosFacade.encontrarPorCorreoYContrasena(correo, contrasena);
         if (u != null) {
             usuarioCDI.setUsuario(u);
-            objetivoAhorroCDI.cargarObjetivos();
-            return "crearObjetivo.xhtml?faces-redirect=true";
+            return "menu.xhtml?faces-redirect=true"; //MENU
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales inválidas", ""));
             return null;
         }
     }
+
 
     public String cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

@@ -37,12 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findByContrasena", query = "SELECT u FROM Usuarios u WHERE u.contrasena = :contrasena")})
 public class Usuarios implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_usuario")
-    private Integer idUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -58,6 +52,17 @@ public class Usuarios implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "contrasena")
     private String contrasena;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<CategoriasGasto> categoriasGastoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<Gastos> gastosList;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Cuentas> cuentasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
@@ -85,29 +90,6 @@ public class Usuarios implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
 
     @XmlTransient
     public List<Cuentas> getCuentasList() {
@@ -150,6 +132,48 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "modelo.Usuarios[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    @XmlTransient
+    public List<CategoriasGasto> getCategoriasGastoList() {
+        return categoriasGastoList;
+    }
+
+    public void setCategoriasGastoList(List<CategoriasGasto> categoriasGastoList) {
+        this.categoriasGastoList = categoriasGastoList;
+    }
+
+    @XmlTransient
+    public List<Gastos> getGastosList() {
+        return gastosList;
+    }
+
+    public void setGastosList(List<Gastos> gastosList) {
+        this.gastosList = gastosList;
     }
     
 }

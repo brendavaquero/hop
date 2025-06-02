@@ -46,6 +46,8 @@ public class ObjetivoAhorroDAO {
     public List<ObjetivosAhorro> obtenerPorUsuario(Usuarios usuario) {
         return objetivosAhorroFacade.findByUsuario(usuario);
     }
+    
+    
 }
 
 

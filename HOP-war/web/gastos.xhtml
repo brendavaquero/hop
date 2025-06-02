@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Resumen de gastos</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h3>Resumen de gastos mensuales</h3>
+
+        <h:outputLabel for="mes" value="Mes:" />
+        <h:selectOneMenu id="mes" value="#{resumenGastoCDI.mesSeleccionado}">
+            <f:selectItem itemValue="1" itemLabel="Enero"/>
+            <f:selectItem itemValue="2" itemLabel="Febrero"/>
+            <f:selectItem itemValue="3" itemLabel="Marzo"/>
+            <f:selectItem itemValue="4" itemLabel="Abril"/>
+            <f:selectItem itemValue="5" itemLabel="Mayo"/>
+            <f:selectItem itemValue="6" itemLabel="Junio"/>
+            <f:selectItem itemValue="7" itemLabel="Julio"/>
+            <f:selectItem itemValue="8" itemLabel="Agosto"/>
+            <f:selectItem itemValue="9" itemLabel="Septiembre"/>
+            <f:selectItem itemValue="10" itemLabel="Octubre"/>
+            <f:selectItem itemValue="11" itemLabel="Noviembre"/>
+            <f:selectItem itemValue="12" itemLabel="Diciembre"/>
+        </h:selectOneMenu>
+
+        <h:outputLabel for="anio" value=" Año:" />
+        <h:inputText id="anio" value="#{resumenGastoCDI.anioSeleccionado}" size="4" maxlength="4" />
+
+        <h:commandButton value="Consultar" action="#{resumenGastoCDI.cargarResumen}" />
+    </h:form>
+
+    <h:panelGroup rendered="#{not empty resumenGastoCDI.resumenMensual}">
+        <h3>Resumen para #{resumenGastoCDI.mesSeleccionado}/#{resumenGastoCDI.anioSeleccionado}</h3>
+
+        <h:dataTable value="#{resumenGastoCDI.resumenMensual}" var="r" border="1"
+                     style="width:100%; border-collapse:collapse;">
+            <h:column>
+                <f:facet name="header">Categoría</f:facet>
+                #{r.nombreCategoria}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Asignado</f:facet>
+                #{r.montoAsignado}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Gastado</f:facet>
+                #{r.montoGastado}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Disponible</f:facet>
+                #{r.montoDisponible}
+            </h:column>
+        </h:dataTable>
+    </h:panelGroup>
+</h:body>
+</html>
