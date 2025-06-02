@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Crear objetivo de ahorro</title>
+</h:head>
+<h:body>
+    <h:form id="bienvenida">
+        <h:outputText value="Hola, " />
+        <h:outputText value="#{usuarioCDI.usuario.nombre}" style="font-weight:bold;" />
+        &nbsp;|&nbsp;
+        <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
+    </h:form>
+    
+    <h:form id="nuevoObjetivo">
+        <h3>Nuevo objetivo de ahorro</h3>
+        <h:outputLabel for="nombre" value="Nombre:" />
+        <h:inputText id="nombre" value="#{objetivoAhorroCDI.nuevoObjetivo.nombre}" required="true">
+            <f:validateLength minimum="1" maximum="100"/>
+        </h:inputText>
+        <br/><br/>
+
+        <h:outputLabel for="descripcion" value="Descripción:" />
+        <h:inputTextarea id="descripcion" value="#{objetivoAhorroCDI.nuevoObjetivo.descripcion}" rows="3" cols="40" />
+        <br/><br/>
+
+        <h:outputLabel for="meta" value="Monto Meta:" />
+        <h:inputText id="meta" value="#{objetivoAhorroCDI.nuevoObjetivo.montoMeta}" required="true">
+            <f:validateDoubleRange minimum="0.01"/>
+        </h:inputText>
+        <br/><br/>
+
+        <h:outputLabel for="inicio" value="Fecha Inicio (yyyy-MM-dd):" />
+        <h:inputText id="inicio" value="#{objetivoAhorroCDI.nuevoObjetivo.fechaInicio}" required="true">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+        <br/><br/>
+
+        <h:outputLabel for="fin" value="Fecha Fin (yyyy-MM-dd):" />
+        <h:inputText id="fin" value="#{objetivoAhorroCDI.nuevoObjetivo.fechaFin}" required="true">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+        <br/><br/>
+
+        <h:commandButton value="Guardar Objetivo" action="#{objetivoAhorroCDI.guardarObjetivo}" />
+        <h:messages globalOnly="true" />
+    </h:form>
+    
+    <h:form id="misObjetivos">
+    <h3>Mis objetivos</h3>
+    <h:dataTable value="#{objetivoAhorroCDI.listaObjetivos}" var="o" border="1"
+                 style="width:100%; border-collapse:collapse; text-align:left;">
+        <h:column>
+            <f:facet name="header">Nombre</f:facet>
+            #{o.nombre}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Descripción</f:facet>
+            #{o.descripcion}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Meta</f:facet>
+            #{o.montoMeta}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Monto actual</f:facet>
+            #{o.montoActual}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Inicio</f:facet>
+            <h:outputText value="#{o.fechaInicio}">
+                <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Fin</f:facet>
+            <h:outputText value="#{o.fechaFin}">
+                <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Acciones</f:facet>
+            <h:commandLink value="Eliminar"
+                           action="#{objetivoAhorroCDI.eliminarObjetivo(o)}"
+                           onclick="if (!confirm('¿Eliminar este objetivo?')) return false;" />
+        </h:column>
+    </h:dataTable>
+    </h:form>
+
+</h:body>
+</html>
+
+
+

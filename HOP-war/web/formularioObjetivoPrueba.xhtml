@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Formulario de prueba - Insertar objetivo</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h3>Insertar objetivo de ahorro manual</h3>
+
+        <h:outputLabel value="ID Usuario:" for="idUsuario"/>
+        <h:inputText id="idUsuario" value="#{objetivoAhorroCDI.nuevoObjetivo.idUsuario.idUsuario}" required="true"/>
+        <br/>
+
+        <h:outputLabel value="Nombre del objetivo:" for="nombre"/>
+        <h:inputText id="nombre" value="#{objetivoAhorroCDI.nuevoObjetivo.nombre}" required="true"/>
+        <br/>
+
+        <h:outputLabel value="Descripción:" for="descripcion"/>
+        <h:inputTextarea id="descripcion" value="#{objetivoAhorroCDI.nuevoObjetivo.descripcion}" rows="3" cols="40"/>
+        <br/>
+
+        <h:outputLabel value="Monto meta:" for="meta"/>
+        <h:inputText id="meta" value="#{objetivoAhorroCDI.nuevoObjetivo.montoMeta}" required="true">
+            <f:validateDoubleRange minimum="0.01"/>
+        </h:inputText>
+        <br/>
+
+        <h:outputLabel value="Monto actual:" for="actual"/>
+        <h:inputText id="actual" value="#{objetivoAhorroCDI.nuevoObjetivo.montoActual}" required="true">
+            <f:validateDoubleRange minimum="0.0"/>
+        </h:inputText>
+        <br/>
+
+        <h:outputLabel value="Fecha inicio (yyyy-MM-dd):" for="inicio"/>
+        <h:inputText id="inicio" value="#{objetivoAhorroCDI.nuevoObjetivo.fechaInicio}" required="true">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+        <br/>
+
+        <h:outputLabel value="Fecha fin (yyyy-MM-dd):" for="fin"/>
+        <h:inputText id="fin" value="#{objetivoAhorroCDI.nuevoObjetivo.fechaFin}" required="true">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+        <br/><br/>
+
+        <h:commandButton value="Guardar objetivo" action="#{objetivoAhorroCDI.guardarObjetivo}"/>
+    </h:form>
+</h:body>
+</html>
