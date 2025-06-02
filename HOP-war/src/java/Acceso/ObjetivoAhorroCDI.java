@@ -15,7 +15,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import modelo.ObjetivosAhorro;
+import acceso.AportesObjetivoFacade;
+import java.util.Date;
 import modelo.Usuarios;
+import modelo.AportesObjetivo;
 
 /**
  *
@@ -54,7 +57,7 @@ public class ObjetivoAhorroCDI implements Serializable {
         if (u == null) {
             return; //redirigir al login
         }
-        //relacionado al usuario en sesión:
+        //usuario en sesión:
         nuevoObjetivo.setIdUsuario(usuarioCDI.getUsuario());
         nuevoObjetivo.setMontoActual(BigDecimal.ZERO);
         objetivoAhorroDAO.crearObjetivo(nuevoObjetivo);
@@ -81,6 +84,57 @@ public class ObjetivoAhorroCDI implements Serializable {
     public void setListaObjetivos(List<ObjetivosAhorro> listaObjetivos) {
         this.listaObjetivos = listaObjetivos;
     }
+    
+    @Inject
+    private AportesObjetivoFacade aportesObjetivoFacade;
+
+    private AportesObjetivo nuevoAporte;
+    private ObjetivosAhorro objetivoSeleccionado;
+
+    public void seleccionarObjetivo(ObjetivosAhorro objetivo) {
+        this.objetivoSeleccionado = objetivo;
+        this.nuevoAporte = new AportesObjetivo();
+    }
+
+    public void guardarAporte() {
+        if (objetivoSeleccionado == null || nuevoAporte.getMontoAportado() == null) {
+            return;
+        }
+
+        //fecha y referencia
+        nuevoAporte.setFechaAporte(new Date());
+        nuevoAporte.setIdObjetivo(objetivoSeleccionado);
+        aportesObjetivoFacade.create(nuevoAporte);
+
+        // actualizar monto actual del objetivo
+        BigDecimal actual = objetivoSeleccionado.getMontoActual() != null
+            ? objetivoSeleccionado.getMontoActual()
+            //si el monto es null lo sustituye por:
+            : BigDecimal.ZERO;
+        objetivoSeleccionado.setMontoActual(actual.add(nuevoAporte.getMontoAportado()));
+        objetivoAhorroDAO.actualizarObjetivo(objetivoSeleccionado);
+        cargarObjetivos();
+        nuevoAporte = null;
+        objetivoSeleccionado = null;
+    }
+    
+    public ObjetivosAhorro getObjetivoSeleccionado() {
+        return objetivoSeleccionado;
+    }
+
+    public void setObjetivoSeleccionado(ObjetivosAhorro objetivoSeleccionado) {
+        this.objetivoSeleccionado = objetivoSeleccionado;
+    }
+
+    public AportesObjetivo getNuevoAporte() {
+        return nuevoAporte;
+    }
+
+    public void setNuevoAporte(AportesObjetivo nuevoAporte) {
+        this.nuevoAporte = nuevoAporte;
+    }
+    
+    
 }
 
 

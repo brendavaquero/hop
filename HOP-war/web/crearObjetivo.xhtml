@@ -83,11 +83,25 @@
         </h:column>
         <h:column>
             <f:facet name="header">Acciones</f:facet>
-            <h:commandLink value="Eliminar"
+            <h:commandButton value="Eliminar"
                            action="#{objetivoAhorroCDI.eliminarObjetivo(o)}"
                            onclick="if (!confirm('¿Eliminar este objetivo?')) return false;" />
+            <h:commandButton value="Aportar"
+                 action="#{objetivoAhorroCDI.seleccionarObjetivo(o)}"
+                 immediate="true" />
         </h:column>
     </h:dataTable>
+    </h:form>
+        <h:form rendered="#{objetivoAhorroCDI.objetivoSeleccionado != null}">
+        <h3>Aportar al objetivo: #{objetivoAhorroCDI.objetivoSeleccionado.nombre}</h3>
+
+        <h:outputLabel for="aporte" value="Monto a aportar:" />
+        <h:inputText id="aporte" value="#{objetivoAhorroCDI.nuevoAporte.montoAportado}" required="true">
+            <f:validateDoubleRange minimum="0.01" />
+        </h:inputText>
+
+        <br/><br/>
+        <h:commandButton value="Confirmar aporte" action="#{objetivoAhorroCDI.guardarAporte}" />
     </h:form>
 
 </h:body>
