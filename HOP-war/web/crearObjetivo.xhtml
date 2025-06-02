@@ -89,8 +89,30 @@
             <h:commandButton value="Aportar"
                  action="#{objetivoAhorroCDI.seleccionarObjetivo(o)}"
                  immediate="true" />
+            <h:commandButton value="Ver aportes"
+                 action="#{objetivoAhorroCDI.verHistorial(o)}"
+                 immediate="true" />
         </h:column>
     </h:dataTable>
+    
+    <h:form rendered="#{objetivoAhorroCDI.objetivoParaHistorial != null}">
+        <h3>Historial de aportes: #{objetivoAhorroCDI.objetivoParaHistorial.nombre}</h3>
+
+        <h:dataTable value="#{objetivoAhorroCDI.historialAportes}" var="a" border="1"
+                     style="width:100%; border-collapse:collapse;">
+            <h:column>
+                <f:facet name="header">Fecha</f:facet>
+                <h:outputText value="#{a.fechaAporte}">
+                    <f:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Monto aportado</f:facet>
+                #{a.montoAportado}
+            </h:column>
+        </h:dataTable>
+    </h:form>
+    
     </h:form>
         <h:form rendered="#{objetivoAhorroCDI.objetivoSeleccionado != null}">
         <h3>Aportar al objetivo: #{objetivoAhorroCDI.objetivoSeleccionado.nombre}</h3>

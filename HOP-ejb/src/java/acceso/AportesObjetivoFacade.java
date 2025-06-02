@@ -4,10 +4,12 @@
  */
 package acceso;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import modelo.AportesObjetivo;
+import modelo.ObjetivosAhorro;
 
 /**
  *
@@ -28,4 +30,9 @@ public class AportesObjetivoFacade extends AbstractFacade<AportesObjetivo> {
         super(AportesObjetivo.class);
     }
     
+    public List<AportesObjetivo> buscarPorObjetivo(ObjetivosAhorro objetivo) {
+        return em.createQuery("SELECT a FROM AportesObjetivo a WHERE a.idObjetivo = :objetivo ORDER BY a.fechaAporte DESC", AportesObjetivo.class)
+                 .setParameter("objetivo", objetivo)
+                 .getResultList();
+    }    
 }

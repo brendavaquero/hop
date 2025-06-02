@@ -17,6 +17,8 @@ import javax.inject.Inject;
 import modelo.ObjetivosAhorro;
 import acceso.AportesObjetivoFacade;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import modelo.Usuarios;
 import modelo.AportesObjetivo;
 
@@ -36,6 +38,11 @@ public class ObjetivoAhorroCDI implements Serializable {
 
     private ObjetivosAhorro nuevoObjetivo;
     private List<ObjetivosAhorro> listaObjetivos;
+    
+    //nuevos, para acceder a los aportes por objetivo
+    private List<AportesObjetivo> historialAportes;
+    private ObjetivosAhorro objetivoParaHistorial;
+
 
     @PostConstruct
     public void init() {
@@ -97,27 +104,53 @@ public class ObjetivoAhorroCDI implements Serializable {
     }
 
     public void guardarAporte() {
-        if (objetivoSeleccionado == null || nuevoAporte.getMontoAportado() == null) {
+        if (objetivoSeleccionado == null || nuevoAporte == null || nuevoAporte.getMontoAportado() == null) {
             return;
         }
 
-        //fecha y referencia
+        BigDecimal montoActual = objetivoSeleccionado.getMontoActual() != null
+            ? objetivoSeleccionado.getMontoActual()
+            : BigDecimal.ZERO; // si el monto es null lo sustituye por cero
+
+        BigDecimal montoMeta = objetivoSeleccionado.getMontoMeta();
+        BigDecimal montoAportado = nuevoAporte.getMontoAportado();
+
+        //no permitir que se exceda la meta
+        if (montoActual.add(montoAportado).compareTo(montoMeta) > 0) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_WARN,
+                "El aporte excede la meta de ahorro establecida", null));
+            return;
+        }
+
+        // Guardar el aporte
         nuevoAporte.setFechaAporte(new Date());
         nuevoAporte.setIdObjetivo(objetivoSeleccionado);
         aportesObjetivoFacade.create(nuevoAporte);
 
-        // actualizar monto actual del objetivo
-        BigDecimal actual = objetivoSeleccionado.getMontoActual() != null
-            ? objetivoSeleccionado.getMontoActual()
-            //si el monto es null lo sustituye por:
-            : BigDecimal.ZERO;
-        objetivoSeleccionado.setMontoActual(actual.add(nuevoAporte.getMontoAportado()));
+        // Actualizar el monto actual
+        objetivoSeleccionado.setMontoActual(montoActual.add(montoAportado));
         objetivoAhorroDAO.actualizarObjetivo(objetivoSeleccionado);
+
+        // Refrescar
         cargarObjetivos();
         nuevoAporte = null;
         objetivoSeleccionado = null;
     }
-    
+
+    public void verHistorial(ObjetivosAhorro objetivo) {
+        this.objetivoParaHistorial = objetivo;
+        this.historialAportes = aportesObjetivoFacade.buscarPorObjetivo(objetivo);
+    }
+
+    public List<AportesObjetivo> getHistorialAportes() {
+        return historialAportes;
+    }
+
+    public ObjetivosAhorro getObjetivoParaHistorial() {
+        return objetivoParaHistorial;
+    }
+
     public ObjetivosAhorro getObjetivoSeleccionado() {
         return objetivoSeleccionado;
     }
