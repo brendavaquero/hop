@@ -42,21 +42,32 @@ public class LoginCDI implements Serializable {
         Usuarios u = usuariosFacade.encontrarPorCorreoYContrasena(correo, contrasena);
         if (u != null) {
             usuarioCDI.setUsuario(u);
-            // aquí se mostrará la guía introductoria
+
+            // verificar si el perfil está incompleto
+            if (usuarioCDI.perfilIncompleto()) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getFlash().setKeepMessages(true);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "", "Por favor completa tu perfil"));
+                return "perfil.xhtml?faces-redirect=true";
+            }
+
+            // mostrar guía si es usuario nuevo
             if (usuarioCDI.mostrarGuia()) {
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.getExternalContext().getFlash().setKeepMessages(true); //conservar mensajesa través de la redirección
+                context.getExternalContext().getFlash().setKeepMessages(true);
                 context.addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Bienvenid@", "Te mostraremos una guía rápida para comenzar"));
                 usuarioCDI.marcarGuiaVista();
             }
+            
             /*if (usuarioCDI.mostrarGuia()) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", "Te mostraremos una guía rápida para comenzar"));
-                usuarioCDI.marcarGuiaVista();
-            }*/
-
+                           FacesContext.getCurrentInstance().addMessage(null,
+                               new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", "Te mostraremos una guía rápida para comenzar"));
+                           usuarioCDI.marcarGuiaVista();
+                       }*/
+            
             return "menu.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -64,6 +75,7 @@ public class LoginCDI implements Serializable {
             return null;
         }
     }
+
 
     public String cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

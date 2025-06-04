@@ -5,6 +5,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -55,6 +56,12 @@ public class Usuarios implements Serializable {
     @Size(max = 1)
     @Column(name = "nuevo")
     private String nuevo;
+    @Size(max = 50)
+    @Column(name = "rol_familiar")
+    private String rolFamiliar;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "ingresos_aproximados")
+    private BigDecimal ingresosAproximados;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -163,6 +170,22 @@ public class Usuarios implements Serializable {
 
     public void setNuevo(String nuevo) {
         this.nuevo = nuevo;
+    }
+
+    public String getRolFamiliar() {
+        return rolFamiliar;
+    }
+
+    public void setRolFamiliar(String rolFamiliar) {
+        this.rolFamiliar = rolFamiliar;
+    }
+
+    public BigDecimal getIngresosAproximados() {
+        return ingresosAproximados;
+    }
+
+    public void setIngresosAproximados(BigDecimal ingresosAproximados) {
+        this.ingresosAproximados = ingresosAproximados;
     }
     
 }

@@ -39,4 +39,9 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
             return null;
         }
     }
+    
+    public void actualizarPerfilUsuario(Usuarios usuario) {
+        em.merge(usuario);
+    }
+
 }

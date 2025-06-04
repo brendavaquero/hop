@@ -13,6 +13,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import modelo.Usuarios;
+import acceso.UsuariosFacade;
+import javax.ejb.EJB;
 
 /**
  *
@@ -49,7 +51,23 @@ public class UsuarioCDI implements Serializable {
     public void marcarGuiaVista() {
         introduccionDAO.marcarIntroduccionVista(usuario);
     }
+    
+    
+    @EJB
+    private UsuariosFacade usuariosFacade;
+    
+    public String actualizarPerfil() {
+        usuariosFacade.actualizarPerfilUsuario(usuario);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Perfil actualizado correctamente"));
+        return "menu?faces-redirect=true";
+    }
+    
+    public boolean perfilIncompleto() {
+        return usuario.getRolFamiliar() == null || usuario.getRolFamiliar().isBlank()|| usuario.getIngresosAproximados() == null;
+    }
 
+
+    
     /*public void verificarGuia() {
         if (mostrarGuia()) {
             FacesContext.getCurrentInstance().addMessage(null,
