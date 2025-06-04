@@ -30,6 +30,10 @@ import modelo.AportesObjetivo;
 @SessionScoped
 public class ObjetivoAhorroCDI implements Serializable {
 
+    public ObjetivoAhorroCDI() {
+    }
+
+
     @Inject
     private ObjetivoAhorroDAO objetivoAhorroDAO;
 

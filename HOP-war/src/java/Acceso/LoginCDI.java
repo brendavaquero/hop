@@ -22,6 +22,9 @@ import javax.inject.Inject;
 @SessionScoped
 public class LoginCDI implements Serializable {
 
+    public LoginCDI() {
+    }
+    
     @EJB
     private UsuariosFacade usuariosFacade;
 
@@ -39,7 +42,22 @@ public class LoginCDI implements Serializable {
         Usuarios u = usuariosFacade.encontrarPorCorreoYContrasena(correo, contrasena);
         if (u != null) {
             usuarioCDI.setUsuario(u);
-            return "menu.xhtml?faces-redirect=true"; //MENU
+            // aquí se mostrará la guía introductoria
+            if (usuarioCDI.mostrarGuia()) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getFlash().setKeepMessages(true); //conservar mensajesa través de la redirección
+                context.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Bienvenid@", "Te mostraremos una guía rápida para comenzar"));
+                usuarioCDI.marcarGuiaVista();
+            }
+            /*if (usuarioCDI.mostrarGuia()) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", "Te mostraremos una guía rápida para comenzar"));
+                usuarioCDI.marcarGuiaVista();
+            }*/
+
+            return "menu.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales inválidas", ""));
@@ -47,15 +65,21 @@ public class LoginCDI implements Serializable {
         }
     }
 
-
     public String cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login.xhtml?faces-redirect=true";
     }
 
-    public String getCorreo() { return correo; }
-    public void setCorreo(String correo) { this.correo = correo; }
-
-    public String getContrasena() { return contrasena; }
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+    public String getCorreo() { 
+        return correo; 
+    }
+    public void setCorreo(String correo) { 
+        this.correo = correo;
+    }
+    public String getContrasena() { 
+        return contrasena; 
+    }
+    public void setContrasena(String contrasena) { 
+        this.contrasena = contrasena; 
+    }
 }

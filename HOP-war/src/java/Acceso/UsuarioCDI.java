@@ -4,10 +4,14 @@
  */
 package Acceso;
 
+import control.IntroduccionDAO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import modelo.Usuarios;
 
 /**
@@ -20,10 +24,10 @@ import modelo.Usuarios;
 @SessionScoped
 public class UsuarioCDI implements Serializable {
 
-    private Usuarios usuario;
+    public UsuarioCDI() {
+    }   
     
-    
-
+    private Usuarios usuario;    
     public Usuarios getUsuario() {
         return usuario;
     }
@@ -35,5 +39,26 @@ public class UsuarioCDI implements Serializable {
     public boolean isAutenticado() {
         return usuario != null;
     }
+    
+    @Inject
+    private IntroduccionDAO introduccionDAO;
+
+    public boolean mostrarGuia() {
+        return introduccionDAO.esUsuarioNuevo(usuario);
+    }
+    public void marcarGuiaVista() {
+        introduccionDAO.marcarIntroduccionVista(usuario);
+    }
+
+    /*public void verificarGuia() {
+        if (mostrarGuia()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenid@", "Te mostraremos una guía rápida para comenzar"));
+            marcarGuiaVista();
+        }
+    }*/
+    
+
+
 }
 
