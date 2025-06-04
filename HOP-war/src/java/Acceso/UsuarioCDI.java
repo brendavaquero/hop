@@ -21,6 +21,8 @@ import modelo.Usuarios;
 public class UsuarioCDI implements Serializable {
 
     private Usuarios usuario;
+    
+    
 
     public Usuarios getUsuario() {
         return usuario;

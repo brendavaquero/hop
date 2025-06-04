@@ -7,14 +7,14 @@ package acceso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import modelo.Gastos;
+import modelo.CategoriasGenerales;
 
 /**
  *
  * @author brend
  */
 @Stateless
-public class GastosFacade extends AbstractFacade<Gastos> {
+public class CategoriasGeneralesFacade extends AbstractFacade<CategoriasGenerales> {
 
     @PersistenceContext(unitName = "HOP-ejbPU")
     private EntityManager em;
@@ -24,8 +24,8 @@ public class GastosFacade extends AbstractFacade<Gastos> {
         return em;
     }
 
-    public GastosFacade() {
-        super(Gastos.class);
+    public CategoriasGeneralesFacade() {
+        super(CategoriasGenerales.class);
     }
     
 }

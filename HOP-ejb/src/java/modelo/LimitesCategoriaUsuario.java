@@ -6,7 +6,6 @@ package modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,15 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,35 +25,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author brend
  */
 @Entity
-@Table(name = "gastos")
+@Table(name = "limites_categoria_usuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Gastos.findAll", query = "SELECT g FROM Gastos g"),
-    @NamedQuery(name = "Gastos.findByIdGasto", query = "SELECT g FROM Gastos g WHERE g.idGasto = :idGasto"),
-    @NamedQuery(name = "Gastos.findByFechaGasto", query = "SELECT g FROM Gastos g WHERE g.fechaGasto = :fechaGasto"),
-    @NamedQuery(name = "Gastos.findByMonto", query = "SELECT g FROM Gastos g WHERE g.monto = :monto")})
-public class Gastos implements Serializable {
+    @NamedQuery(name = "LimitesCategoriaUsuario.findAll", query = "SELECT l FROM LimitesCategoriaUsuario l"),
+    @NamedQuery(name = "LimitesCategoriaUsuario.findByIdLimite", query = "SELECT l FROM LimitesCategoriaUsuario l WHERE l.idLimite = :idLimite"),
+    @NamedQuery(name = "LimitesCategoriaUsuario.findByMontoAsignado", query = "SELECT l FROM LimitesCategoriaUsuario l WHERE l.montoAsignado = :montoAsignado")})
+public class LimitesCategoriaUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_gasto")
-    private Integer idGasto;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_gasto")
-    @Temporal(TemporalType.DATE)
-    private Date fechaGasto;
+    @Column(name = "id_limite")
+    private Integer idLimite;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Column(name = "monto")
-    private BigDecimal monto;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "monto_asignado")
+    private BigDecimal montoAsignado;
     @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
     @ManyToOne(optional = false)
     private CategoriasGenerales idCategoria;
@@ -66,49 +51,32 @@ public class Gastos implements Serializable {
     @ManyToOne(optional = false)
     private Usuarios idUsuario;
 
-    public Gastos() {
+    public LimitesCategoriaUsuario() {
     }
 
-    public Gastos(Integer idGasto) {
-        this.idGasto = idGasto;
+    public LimitesCategoriaUsuario(Integer idLimite) {
+        this.idLimite = idLimite;
     }
 
-    public Gastos(Integer idGasto, Date fechaGasto, BigDecimal monto) {
-        this.idGasto = idGasto;
-        this.fechaGasto = fechaGasto;
-        this.monto = monto;
+    public LimitesCategoriaUsuario(Integer idLimite, BigDecimal montoAsignado) {
+        this.idLimite = idLimite;
+        this.montoAsignado = montoAsignado;
     }
 
-    public Integer getIdGasto() {
-        return idGasto;
+    public Integer getIdLimite() {
+        return idLimite;
     }
 
-    public void setIdGasto(Integer idGasto) {
-        this.idGasto = idGasto;
+    public void setIdLimite(Integer idLimite) {
+        this.idLimite = idLimite;
     }
 
-    public Date getFechaGasto() {
-        return fechaGasto;
+    public BigDecimal getMontoAsignado() {
+        return montoAsignado;
     }
 
-    public void setFechaGasto(Date fechaGasto) {
-        this.fechaGasto = fechaGasto;
-    }
-
-    public BigDecimal getMonto() {
-        return monto;
-    }
-
-    public void setMonto(BigDecimal monto) {
-        this.monto = monto;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setMontoAsignado(BigDecimal montoAsignado) {
+        this.montoAsignado = montoAsignado;
     }
 
     public CategoriasGenerales getIdCategoria() {
@@ -130,18 +98,18 @@ public class Gastos implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idGasto != null ? idGasto.hashCode() : 0);
+        hash += (idLimite != null ? idLimite.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Gastos)) {
+        if (!(object instanceof LimitesCategoriaUsuario)) {
             return false;
         }
-        Gastos other = (Gastos) object;
-        if ((this.idGasto == null && other.idGasto != null) || (this.idGasto != null && !this.idGasto.equals(other.idGasto))) {
+        LimitesCategoriaUsuario other = (LimitesCategoriaUsuario) object;
+        if ((this.idLimite == null && other.idLimite != null) || (this.idLimite != null && !this.idLimite.equals(other.idLimite))) {
             return false;
         }
         return true;
@@ -149,7 +117,7 @@ public class Gastos implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Gastos[ idGasto=" + idGasto + " ]";
+        return "modelo.LimitesCategoriaUsuario[ idLimite=" + idLimite + " ]";
     }
     
 }

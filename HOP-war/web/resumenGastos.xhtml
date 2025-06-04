@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Resumen de Gastos Mensuales</title>
+</h:head>
+<h:body>
+    
+    <h:form id="bienvenida">
+            <h:outputText value="Hola, " />
+            <h:outputText value="#{usuarioCDI.usuario.nombre}" style="font-weight:bold;" />
+            &nbsp;|&nbsp;
+            <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
+        </h:form>
+
+    <h:form>
+        <h3>Resumen de Gastos por Categoría</h3>
+        
+        
+
+        <h:panelGrid columns="4" cellpadding="5">
+            <h:outputLabel for="mes" value="Mes (1-12):" />
+            <h:inputText id="mes" value="#{resumenGastosCDI.mes}" required="true" />
+
+            <h:outputLabel for="anio" value="Año:" />
+            <h:inputText id="anio" value="#{resumenGastosCDI.anio}" required="true" />
+        </h:panelGrid>
+
+        <br/>
+        <h:commandButton value="Consultar" action="#{resumenGastosCDI.cargarResumen}" />
+        <br/><br/>
+
+        <h:dataTable value="#{resumenGastosCDI.resumenMensual}" var="r" border="1"
+                     style="width:100%; border-collapse:collapse; text-align:left;">
+            <h:column>
+                <f:facet name="header">Categoría</f:facet>
+                #{r.nombreCategoria}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Asignado</f:facet>
+                #{r.montoAsignado}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Gastado</f:facet>
+                #{r.montoGastado}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Disponible</f:facet>
+                #{r.montoDisponible}
+            </h:column>
+            
+        </h:dataTable>
+    </h:form>
+
+</h:body>
+</html>
+

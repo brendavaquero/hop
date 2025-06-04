@@ -4,19 +4,17 @@
  */
 package acceso;
 
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import modelo.CategoriasGasto;
-import modelo.Usuarios;
+import modelo.LimitesCategoriaUsuario;
 
 /**
  *
  * @author brend
  */
 @Stateless
-public class CategoriasGastoFacade extends AbstractFacade<CategoriasGasto> {
+public class LimitesCategoriaUsuarioFacade extends AbstractFacade<LimitesCategoriaUsuario> {
 
     @PersistenceContext(unitName = "HOP-ejbPU")
     private EntityManager em;
@@ -26,17 +24,8 @@ public class CategoriasGastoFacade extends AbstractFacade<CategoriasGasto> {
         return em;
     }
 
-    public CategoriasGastoFacade() {
-        super(CategoriasGasto.class);
+    public LimitesCategoriaUsuarioFacade() {
+        super(LimitesCategoriaUsuario.class);
     }
     
-    public List<CategoriasGasto> categoriasPorUsuario(Usuarios usuario) {
-        return em.createQuery(
-            "SELECT c FROM CategoriasGasto c WHERE c.idUsuario = :usuario", 
-            CategoriasGasto.class
-        )
-        .setParameter("usuario", usuario)
-        .getResultList();
-    }
-
 }

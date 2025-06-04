@@ -37,8 +37,8 @@ public class ObjetivosAhorroFacade extends AbstractFacade<ObjetivosAhorro> {
         )
         .setParameter("usuario", u)
         .getResultList();*/
-            return em.createQuery("SELECT o FROM ObjetivosAhorro o WHERE o.idUsuario = :usuario ORDER BY o.fechaInicio DESC", ObjetivosAhorro.class)
-             .setParameter("usuario", u)
-             .getResultList();
+        return em.createQuery("SELECT o FROM ObjetivosAhorro o WHERE o.idUsuario = :usuario ORDER BY o.fechaInicio DESC", ObjetivosAhorro.class)
+            .setParameter("usuario", u)
+        .getResultList();
     }
 }

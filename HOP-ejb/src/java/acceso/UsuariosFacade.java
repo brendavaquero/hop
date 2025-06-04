@@ -6,6 +6,7 @@ package acceso;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import modelo.Usuarios;
 
@@ -34,7 +35,7 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
                      .setParameter("correo", correo)
                      .setParameter("contrasena", contrasena)
                      .getSingleResult();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             return null;
         }
     }

@@ -5,7 +5,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -14,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,14 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author brend
  */
 @Entity
-@Table(name = "categorias_gasto")
+@Table(name = "categorias_generales")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CategoriasGasto.findAll", query = "SELECT c FROM CategoriasGasto c"),
-    @NamedQuery(name = "CategoriasGasto.findByIdCategoria", query = "SELECT c FROM CategoriasGasto c WHERE c.idCategoria = :idCategoria"),
-    @NamedQuery(name = "CategoriasGasto.findByNombre", query = "SELECT c FROM CategoriasGasto c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "CategoriasGasto.findByMontoAsignado", query = "SELECT c FROM CategoriasGasto c WHERE c.montoAsignado = :montoAsignado")})
-public class CategoriasGasto implements Serializable {
+    @NamedQuery(name = "CategoriasGenerales.findAll", query = "SELECT c FROM CategoriasGenerales c"),
+    @NamedQuery(name = "CategoriasGenerales.findByIdCategoria", query = "SELECT c FROM CategoriasGenerales c WHERE c.idCategoria = :idCategoria"),
+    @NamedQuery(name = "CategoriasGenerales.findByNombre", query = "SELECT c FROM CategoriasGenerales c WHERE c.nombre = :nombre")})
+public class CategoriasGenerales implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,28 +46,21 @@ public class CategoriasGasto implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "nombre")
     private String nombre;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "monto_asignado")
-    private BigDecimal montoAsignado;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
-    private Usuarios idUsuario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
+    private List<LimitesCategoriaUsuario> limitesCategoriaUsuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
     private List<Gastos> gastosList;
 
-    public CategoriasGasto() {
+    public CategoriasGenerales() {
     }
 
-    public CategoriasGasto(Integer idCategoria) {
+    public CategoriasGenerales(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
 
-    public CategoriasGasto(Integer idCategoria, String nombre, BigDecimal montoAsignado) {
+    public CategoriasGenerales(Integer idCategoria, String nombre) {
         this.idCategoria = idCategoria;
         this.nombre = nombre;
-        this.montoAsignado = montoAsignado;
     }
 
     public Integer getIdCategoria() {
@@ -90,20 +79,13 @@ public class CategoriasGasto implements Serializable {
         this.nombre = nombre;
     }
 
-    public BigDecimal getMontoAsignado() {
-        return montoAsignado;
+    @XmlTransient
+    public List<LimitesCategoriaUsuario> getLimitesCategoriaUsuarioList() {
+        return limitesCategoriaUsuarioList;
     }
 
-    public void setMontoAsignado(BigDecimal montoAsignado) {
-        this.montoAsignado = montoAsignado;
-    }
-
-    public Usuarios getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Usuarios idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setLimitesCategoriaUsuarioList(List<LimitesCategoriaUsuario> limitesCategoriaUsuarioList) {
+        this.limitesCategoriaUsuarioList = limitesCategoriaUsuarioList;
     }
 
     @XmlTransient
@@ -125,10 +107,10 @@ public class CategoriasGasto implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CategoriasGasto)) {
+        if (!(object instanceof CategoriasGenerales)) {
             return false;
         }
-        CategoriasGasto other = (CategoriasGasto) object;
+        CategoriasGenerales other = (CategoriasGenerales) object;
         if ((this.idCategoria == null && other.idCategoria != null) || (this.idCategoria != null && !this.idCategoria.equals(other.idCategoria))) {
             return false;
         }
@@ -137,7 +119,7 @@ public class CategoriasGasto implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.CategoriasGasto[ idCategoria=" + idCategoria + " ]";
+        return "modelo.CategoriasGenerales[ idCategoria=" + idCategoria + " ]";
     }
     
 }

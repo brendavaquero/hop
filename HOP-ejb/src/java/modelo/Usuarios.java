@@ -37,6 +37,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findByContrasena", query = "SELECT u FROM Usuarios u WHERE u.contrasena = :contrasena")})
 public class Usuarios implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -53,20 +59,9 @@ public class Usuarios implements Serializable {
     @Column(name = "contrasena")
     private String contrasena;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<CategoriasGasto> categoriasGastoList;
+    private List<LimitesCategoriaUsuario> limitesCategoriaUsuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Gastos> gastosList;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_usuario")
-    private Integer idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<Cuentas> cuentasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<ObjetivosAhorro> objetivosAhorroList;
 
     public Usuarios() {
     }
@@ -88,50 +83,6 @@ public class Usuarios implements Serializable {
 
     public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-
-    @XmlTransient
-    public List<Cuentas> getCuentasList() {
-        return cuentasList;
-    }
-
-    public void setCuentasList(List<Cuentas> cuentasList) {
-        this.cuentasList = cuentasList;
-    }
-
-    @XmlTransient
-    public List<ObjetivosAhorro> getObjetivosAhorroList() {
-        return objetivosAhorroList;
-    }
-
-    public void setObjetivosAhorroList(List<ObjetivosAhorro> objetivosAhorroList) {
-        this.objetivosAhorroList = objetivosAhorroList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuarios)) {
-            return false;
-        }
-        Usuarios other = (Usuarios) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
 
     public String getNombre() {
@@ -159,12 +110,12 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
-    public List<CategoriasGasto> getCategoriasGastoList() {
-        return categoriasGastoList;
+    public List<LimitesCategoriaUsuario> getLimitesCategoriaUsuarioList() {
+        return limitesCategoriaUsuarioList;
     }
 
-    public void setCategoriasGastoList(List<CategoriasGasto> categoriasGastoList) {
-        this.categoriasGastoList = categoriasGastoList;
+    public void setLimitesCategoriaUsuarioList(List<LimitesCategoriaUsuario> limitesCategoriaUsuarioList) {
+        this.limitesCategoriaUsuarioList = limitesCategoriaUsuarioList;
     }
 
     @XmlTransient
@@ -174,6 +125,31 @@ public class Usuarios implements Serializable {
 
     public void setGastosList(List<Gastos> gastosList) {
         this.gastosList = gastosList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuarios)) {
+            return false;
+        }
+        Usuarios other = (Usuarios) object;
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
     
 }
