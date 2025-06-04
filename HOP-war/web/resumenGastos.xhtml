@@ -26,6 +26,7 @@
 
             <h:outputLabel for="anio" value="Año:" />
             <h:inputText id="anio" value="#{resumenGastosCDI.anio}" required="true" />
+
         </h:panelGrid>
 
         <br/>
@@ -50,9 +51,36 @@
                 <f:facet name="header">Disponible</f:facet>
                 #{r.montoDisponible}
             </h:column>
-            
+            <h:column>
+                <f:facet name="header">Desglose</f:facet>
+                <h:commandLink value="Ver desglose"
+                               action="#{resumenGastosCDI.verDesglose(r.categoria)}"
+                               immediate="true" />
+            </h:column>            
         </h:dataTable>
-    </h:form>
+        </h:form>
+
+        <h:panelGroup rendered="#{not empty resumenGastosCDI.desgloseActual}">
+            <h3>Gastos en #{resumenGastosCDI.categoriaSeleccionada.nombre} (#{resumenGastosCDI.mes}/#{resumenGastosCDI.anio})</h3>
+            <h:dataTable value="#{resumenGastosCDI.desgloseActual}" var="g" border="1" style="width:100%; text-align:left;">
+                <h:column>
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{g.fechaGasto}">
+                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Monto</f:facet>
+                    #{g.monto}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Descripción</f:facet>
+                    #{g.descripcion}
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+
+
 
 </h:body>
 </html>

@@ -31,7 +31,7 @@ public class ResumenGastosDAO {
      public List<ResumenGastoDTO> obtenerResumenMensual(Usuarios usuario, int mes, int anio) {
         List<ResumenGastoDTO> resumen = new ArrayList<>();
 
-        // Paso 1: Obtener los límites por categoría del usuario
+        //límites por categoría del usuario
         List<LimitesCategoriaUsuario> limites = em.createQuery(
             "SELECT l FROM LimitesCategoriaUsuario l WHERE l.idUsuario = :usuario", LimitesCategoriaUsuario.class)
             .setParameter("usuario", usuario)
@@ -41,7 +41,7 @@ public class ResumenGastosDAO {
             CategoriasGenerales categoria = limite.getIdCategoria();
             BigDecimal montoAsignado = limite.getMontoAsignado();
 
-            // Paso 2: Calcular el monto gastado por este usuario, en esta categoría, ese mes/año
+            //monto gastado por este usuario, en esta categoría, ese mes/año
             BigDecimal montoGastado = em.createQuery(
                 "SELECT COALESCE(SUM(g.monto), 0) FROM Gastos g " +
                 "WHERE g.idUsuario = :usuario AND g.idCategoria = :categoria " +
@@ -53,10 +53,8 @@ public class ResumenGastosDAO {
                 .setParameter("anio", anio)
                 .getSingleResult();
 
-            // Paso 3: Armar el DTO y agregarlo
-            ResumenGastoDTO dto = new ResumenGastoDTO(
-                categoria.getNombre(), montoAsignado, montoGastado
-            );
+
+            ResumenGastoDTO dto = new ResumenGastoDTO(categoria, montoAsignado, montoGastado);
             resumen.add(dto);
         }
 

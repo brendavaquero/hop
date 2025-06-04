@@ -4,6 +4,7 @@
  */
 package Acceso;
 
+import control.DesgloseGastosDAO;
 import control.ResumenGastosDAO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -14,6 +15,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import modelo.CategoriasGenerales;
+import modelo.Gastos;
 import modelo.ResumenGastoDTO;
 
 /**
@@ -30,15 +33,18 @@ public class ResumenGastosCDI implements Serializable {
     public ResumenGastosCDI() {
     }
     
-    
+    //detalle individual de gastos
+    @EJB
+    private DesgloseGastosDAO desgloseGastosDAO;
+    private List<Gastos> desgloseActual;
+    private CategoriasGenerales categoriaSeleccionada;
+
+    //resumen mensual
     @EJB
     private ResumenGastosDAO resumenGastosDAO;
-
-
     @Inject
     private UsuarioCDI usuarioCDI;
-
-    private int mes;  // 1-12
+    private int mes;  //1-12
     private int anio;
     private List<ResumenGastoDTO> resumenMensual;
 
@@ -87,5 +93,19 @@ public class ResumenGastosCDI implements Serializable {
         return resumenMensual;
     }
     
+    public void verDesglose(CategoriasGenerales categoria) {
+        this.categoriaSeleccionada = categoria;
+        desgloseActual = desgloseGastosDAO.obtenerPorCategoriaYFecha(
+            usuarioCDI.getUsuario(), categoria, mes, anio);
+    }
     
+    public List<Gastos> getDesgloseActual() {
+        return desgloseActual;
+    }
+
+    public CategoriasGenerales getCategoriaSeleccionada() {
+        return categoriaSeleccionada;
+    }
+
+
 }

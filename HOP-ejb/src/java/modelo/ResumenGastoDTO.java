@@ -11,20 +11,38 @@ import java.math.BigDecimal;
  * @author brend
  */
 public class ResumenGastoDTO {
+
+    private CategoriasGenerales categoria;
     private String nombreCategoria;
     private BigDecimal montoAsignado;
     private BigDecimal montoGastado;
     private BigDecimal montoDisponible;
 
-    public ResumenGastoDTO(String nombreCategoria, BigDecimal montoAsignado, BigDecimal montoGastado) {
-        this.nombreCategoria = nombreCategoria;
-        this.montoAsignado = montoAsignado;
+    public ResumenGastoDTO(CategoriasGenerales categoria, BigDecimal montoAsignado, BigDecimal montoGastado) {
+        this.categoria = categoria;
+        this.nombreCategoria = categoria.getNombre();
+        this.montoAsignado = montoAsignado != null ? montoAsignado : BigDecimal.ZERO;
         this.montoGastado = montoGastado != null ? montoGastado : BigDecimal.ZERO;
-        this.montoDisponible = montoAsignado.subtract(this.montoGastado);
+        this.montoDisponible = this.montoAsignado.subtract(this.montoGastado);
     }
 
-    public String getNombreCategoria() { return nombreCategoria; }
-    public BigDecimal getMontoAsignado() { return montoAsignado; }
-    public BigDecimal getMontoGastado() { return montoGastado; }
-    public BigDecimal getMontoDisponible() { return montoDisponible; }
+    public CategoriasGenerales getCategoria() {
+        return categoria;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public BigDecimal getMontoAsignado() {
+        return montoAsignado;
+    }
+
+    public BigDecimal getMontoGastado() {
+        return montoGastado;
+    }
+
+    public BigDecimal getMontoDisponible() {
+        return montoDisponible;
+    }
 }
