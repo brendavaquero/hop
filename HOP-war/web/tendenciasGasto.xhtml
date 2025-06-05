@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Tendencias de gasto</title>
+    </h:head>
+    <h:body>
+        
+
+
+        <h:form>
+            <h:outputLabel value="Año:" />
+            <h:inputText value="#{tendenciasGastoCDI.anioSeleccionado}" />
+            <h:commandButton value="Consultar" action="#{tendenciasGastoCDI.cargarTendencias}" />
+
+            <h:dataTable value="#{tendenciasGastoCDI.tendencias}" var="t" border="1">
+                <h:column>
+                    <f:facet name="header">Mes</f:facet>
+                    #{t.mes}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Categoría</f:facet>
+                    #{t.nombreCategoria}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Total Gastado</f:facet>
+                    #{t.totalGastado}
+                </h:column>
+            </h:dataTable>
+        </h:form>
+
+    </h:body>
+</html>
