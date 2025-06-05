@@ -6,6 +6,7 @@ package modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -59,6 +60,8 @@ public class Usuarios implements Serializable {
     @Size(max = 50)
     @Column(name = "rol_familiar")
     private String rolFamiliar;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private Collection<Ingresos> ingresosCollection;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "ingresos_aproximados")
     private BigDecimal ingresosAproximados;
@@ -140,6 +143,24 @@ public class Usuarios implements Serializable {
         return "modelo.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
 
+
+    public String getRolFamiliar() {
+        return rolFamiliar;
+    }
+
+    public void setRolFamiliar(String rolFamiliar) {
+        this.rolFamiliar = rolFamiliar;
+    }
+
+    public BigDecimal getIngresosAproximados() {
+        return ingresosAproximados;
+    }
+
+    public void setIngresosAproximados(BigDecimal ingresosAproximados) {
+        this.ingresosAproximados = ingresosAproximados;
+    }
+
+
     public String getNombre() {
         return nombre;
     }
@@ -172,20 +193,14 @@ public class Usuarios implements Serializable {
         this.nuevo = nuevo;
     }
 
-    public String getRolFamiliar() {
-        return rolFamiliar;
+
+    @XmlTransient
+    public Collection<Ingresos> getIngresosCollection() {
+        return ingresosCollection;
     }
 
-    public void setRolFamiliar(String rolFamiliar) {
-        this.rolFamiliar = rolFamiliar;
-    }
-
-    public BigDecimal getIngresosAproximados() {
-        return ingresosAproximados;
-    }
-
-    public void setIngresosAproximados(BigDecimal ingresosAproximados) {
-        this.ingresosAproximados = ingresosAproximados;
+    public void setIngresosCollection(Collection<Ingresos> ingresosCollection) {
+        this.ingresosCollection = ingresosCollection;
     }
     
 }

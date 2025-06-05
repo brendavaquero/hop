@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Tasa de ahorro</title>
+    </h:head>
+    <h:body>
+         <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Mes:" />
+                <h:inputText value="#{ahorroCDI.mesSeleccionado}" />
+
+                <h:outputLabel value="Año:" />
+                <h:inputText value="#{ahorroCDI.anioSeleccionado}" />
+            </h:panelGrid>
+
+            <h:commandButton value="Calcular" action="#{ahorroCDI.calcularTasaAhorro}" />
+            <br></br>
+            <h:panelGroup rendered="#{not empty ahorroCDI.tasaAhorro}">
+                <h:outputText value="Ingresos: #{ahorroCDI.ingresos}" /><br/>
+                <h:outputText value="Gastos: #{ahorroCDI.gastos}" /><br/>
+                <h:outputText value="Tasa de ahorro: #{ahorroCDI.tasaAhorro}%" />
+            </h:panelGroup>
+        </h:form>
+    </h:body>
+</html>

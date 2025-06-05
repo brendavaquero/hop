@@ -19,15 +19,23 @@
             <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
         </h:panelGroup>
 
-        <br/><br/>
+        <br/><br/>        
 
-        <h:commandButton value="Crear Objetivo de Ahorro"
+
+        <h:commandButton value="Objetivos de ahorro"
                          action="crearObjetivo?faces-redirect=true" />
 
         <br/><br/>
 
-        <h:commandButton value="Consultar Gastos"
+        <h:commandButton value="Consultar gastos"
                          action="resumenGastos?faces-redirect=true" />
+        
+        <br/><br/>
+
+        <h:commandButton value="Tasa de ahorro"
+                         action="tasaAhorro?faces-redirect=true" />
     </h:form>
+    
+   
 </h:body>
 </html>
