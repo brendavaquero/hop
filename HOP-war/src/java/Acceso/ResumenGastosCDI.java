@@ -33,6 +33,10 @@ public class ResumenGastosCDI implements Serializable {
     public ResumenGastosCDI() {
     }
     
+    /*@Inject
+    private ResumenGastosCDI resumenGastosCDI;
+*/
+    
     //detalle individual de gastos
     @EJB
     private DesgloseGastosDAO desgloseGastosDAO;

@@ -17,9 +17,32 @@
         <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
     </h:form>
 
+    
+        <h:form>
+        <h3>Asignar Límite de Gasto</h3>
+
+        <h:outputLabel for="categoria" value="Categoría:" />
+        <h:selectOneMenu id="categoria" value="#{limiteCategoriaCDI.nuevoLimite.idCategoria}" required="true">
+            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+            <f:selectItems value="#{limiteCategoriaCDI.categoriasDisponibles}" var="c"
+                           itemLabel="#{c.nombre}" itemValue="#{c}" />
+            <f:converter converterId="categoriasGeneralesConverter" />
+        </h:selectOneMenu>
+
+        <br/><br/>
+
+        <h:outputLabel for="monto" value="Monto Asignado:" />
+        <h:inputText id="monto" value="#{limiteCategoriaCDI.nuevoLimite.montoAsignado}" required="true">
+            <f:validateDoubleRange minimum="0.01" />
+        </h:inputText>
+        <br/><br/>
+
+        <h:commandButton value="Guardar" action="#{limiteCategoriaCDI.guardar}" />
+        <h:messages globalOnly="true" />
+    </h:form>
+    
     <h:form>
-        <h3>Resumen de Gastos por Categoría</h3>
-        
+        <h3>Resumen por categoría</h3>       
         
 
         <h:panelGrid columns="4" cellpadding="5">

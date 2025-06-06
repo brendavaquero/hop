@@ -4,10 +4,13 @@
  */
 package acceso;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import modelo.CategoriasGenerales;
 import modelo.LimitesCategoriaUsuario;
+import modelo.Usuarios;
 
 /**
  *
@@ -27,5 +30,13 @@ public class LimitesCategoriaUsuarioFacade extends AbstractFacade<LimitesCategor
     public LimitesCategoriaUsuarioFacade() {
         super(LimitesCategoriaUsuario.class);
     }
+    
+    public List<LimitesCategoriaUsuario> findByUsuarioYCategoria(Usuarios usuario, CategoriasGenerales categoria) {
+        return em.createQuery("SELECT l FROM LimitesCategoriaUsuario l WHERE l.idUsuario = :usuario AND l.idCategoria = :categoria", LimitesCategoriaUsuario.class)
+                 .setParameter("usuario", usuario)
+                 .setParameter("categoria", categoria)
+                 .getResultList();
+    }
+
     
 }

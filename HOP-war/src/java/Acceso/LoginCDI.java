@@ -39,6 +39,8 @@ public class LoginCDI implements Serializable {
     private String contrasena;
 
     public String iniciarSesion() {
+        
+
         Usuarios u = usuariosFacade.encontrarPorCorreoYContrasena(correo, contrasena);
         if (u != null) {
             usuarioCDI.setUsuario(u);
