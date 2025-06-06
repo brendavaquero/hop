@@ -7,6 +7,7 @@ package modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -60,6 +63,12 @@ public class Usuarios implements Serializable {
     @Size(max = 50)
     @Column(name = "rol_familiar")
     private String rolFamiliar;
+    @Column(name = "fecha_nacimiento")
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
+    //@Column(name = "fecha_registro")
+    //@Temporal(TemporalType.TIMESTAMP)
+    //private Date fechaRegistro;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private Collection<Ingresos> ingresosCollection;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -159,7 +168,13 @@ public class Usuarios implements Serializable {
     public void setIngresosAproximados(BigDecimal ingresosAproximados) {
         this.ingresosAproximados = ingresosAproximados;
     }
-
+    @XmlTransient
+    public Collection<Ingresos> getIngresosCollection() {
+        return ingresosCollection;
+    }
+    public void setIngresosCollection(Collection<Ingresos> ingresosCollection) {
+        this.ingresosCollection = ingresosCollection;
+    }
 
     public String getNombre() {
         return nombre;
@@ -185,6 +200,7 @@ public class Usuarios implements Serializable {
         this.contrasena = contrasena;
     }
 
+
     public String getNuevo() {
         return nuevo;
     }
@@ -193,14 +209,20 @@ public class Usuarios implements Serializable {
         this.nuevo = nuevo;
     }
 
-
-    @XmlTransient
-    public Collection<Ingresos> getIngresosCollection() {
-        return ingresosCollection;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setIngresosCollection(Collection<Ingresos> ingresosCollection) {
-        this.ingresosCollection = ingresosCollection;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
+
+    /*public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }*/
     
 }
