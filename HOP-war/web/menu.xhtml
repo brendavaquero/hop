@@ -11,17 +11,36 @@
 
     <h:form>
         <h2>Menú Principal</h2>
-
         <h:panelGroup>
             <h:outputText value="Hola, " />
             <h:outputText value="#{usuarioCDI.usuario.nombre}" style="font-weight: bold;" />
             &nbsp;|&nbsp;
             <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
         </h:panelGroup>
+            
+        <br/><br/>   
+            <h2>Balance General</h2>
 
-        <br/><br/>        
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="Ingresos totales:" />
+                <h:outputText value="#{balanceCDI.ingresos}" />
 
+                <h:outputText value="Gastos totales:" />
+                <h:outputText value="#{balanceCDI.gastos}" />
 
+                <h:outputText value="Balance disponible:" />
+                <h:outputText value="#{balanceCDI.balance}" />
+
+                <h:outputText value="Estado:" />
+                <h:outputText value="#{balanceCDI.mensaje}" />
+            </h:panelGrid>
+        <br/><br/>
+        
+        <h:commandButton value="Ingresos"
+                                 action="registroIngresos?faces-redirect=true" />
+        
+        <br/><br/>
+        
         <h:commandButton value="Objetivos de ahorro"
                          action="crearObjetivo?faces-redirect=true" />
 
@@ -41,10 +60,8 @@
                          action="tendenciasGasto?faces-redirect=true" />
         <br/><br/>
 
-        <h:commandButton value="Ingresos"
-                         action="registroIngresos?faces-redirect=true" />
-    </h:form>
-    
+        
+    </h:form>   
    
 </h:body>
 </html>
