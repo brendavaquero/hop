@@ -8,9 +8,11 @@
     <title>Crear objetivo de ahorro</title>
 </h:head>
 <h:body>
-    <h:form id="bienvenida">
+    <h:form id="navegacion">
         <h:outputText value="Hola, " />
         <h:outputText value="#{usuarioCDI.usuario.nombre}" style="font-weight:bold;" />
+        &nbsp;|&nbsp;
+        <h:commandLink value="Menú principal" action="menu.xhtml?faces-redirect=true" />
         &nbsp;|&nbsp;
         <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
     </h:form>

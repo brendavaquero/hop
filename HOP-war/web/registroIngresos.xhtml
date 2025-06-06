@@ -8,6 +8,16 @@
             <title>Ingresos</title>
         </h:head>
         <h:body>
+            
+            <h:form id="navegacion">
+                <h:outputText value="Hola, " />
+                <h:outputText value="#{usuarioCDI.usuario.nombre}" style="font-weight:bold;" />
+                &nbsp;|&nbsp;
+                <h:commandLink value="Menú principal" action="menu.xhtml?faces-redirect=true" />
+                &nbsp;|&nbsp;
+                <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
+            </h:form>
+            
             <h:form>
             <h3>Registrar ingreso</h3>
             <h:panelGrid columns="2">
