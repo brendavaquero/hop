@@ -1,5 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `hop` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `hop`;
+
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: localhost    Database: hop
@@ -116,7 +115,7 @@ CREATE TABLE `gastos` (
   KEY `id_categoria` (`id_categoria`),
   CONSTRAINT `gastos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   CONSTRAINT `gastos_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categorias_generales` (`id_categoria`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,8 +124,37 @@ CREATE TABLE `gastos` (
 
 LOCK TABLES `gastos` WRITE;
 /*!40000 ALTER TABLE `gastos` DISABLE KEYS */;
-INSERT INTO `gastos` VALUES (1,1,1,'2024-03-05',250.00,'Supermercado'),(2,1,1,'2024-03-15',100.00,'Cena'),(3,1,2,'2024-03-10',60.00,'Taxi'),(4,1,3,'2024-03-12',80.00,'Cine'),(5,1,1,'2024-04-02',300.00,'Compra mensual'),(6,1,2,'2024-04-05',90.00,'Transporte público'),(7,2,1,'2024-03-03',200.00,'Restaurante'),(8,2,4,'2024-03-06',150.00,'Medicinas');
+INSERT INTO `gastos` VALUES (1,1,1,'2024-03-05',250.00,'Supermercado'),(2,1,1,'2024-03-15',100.00,'Cena'),(3,1,2,'2024-03-10',60.00,'Taxi'),(4,1,3,'2024-03-12',80.00,'Cine'),(5,1,1,'2024-04-02',300.00,'Compra mensual'),(6,1,2,'2024-04-05',90.00,'Transporte público'),(7,2,1,'2024-03-03',200.00,'Restaurante'),(8,2,4,'2024-03-06',150.00,'Medicinas'),(9,1,1,'2025-05-01',3000.00,'Despensa');
 /*!40000 ALTER TABLE `gastos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ingresos`
+--
+
+DROP TABLE IF EXISTS `ingresos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ingresos` (
+  `id_ingreso` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `monto` decimal(10,2) NOT NULL,
+  `fecha` date NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_ingreso`),
+  KEY `fk_usuario_ingreso` (`id_usuario`),
+  CONSTRAINT `fk_usuario_ingreso` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ingresos`
+--
+
+LOCK TABLES `ingresos` WRITE;
+/*!40000 ALTER TABLE `ingresos` DISABLE KEYS */;
+INSERT INTO `ingresos` VALUES (1,1,10000.00,'2025-05-01','Sueldo mayo'),(2,1,500.00,'2025-05-15','Venta de artículos'),(3,1,10500.00,'2025-06-01','Sueldo junio'),(4,2,12000.00,'2025-06-01','Sueldo junio'),(5,2,1500.00,'2025-06-10','Freelance'),(6,2,800.00,'2025-05-05','Apoyo familiar'),(7,3,9000.00,'2025-04-30','Sueldo abril'),(8,3,9500.00,'2025-05-30','Sueldo mayo'),(9,3,9700.00,'2025-06-01','Sueldo junio');
+/*!40000 ALTER TABLE `ingresos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -204,6 +232,8 @@ CREATE TABLE `usuarios` (
   `correo` varchar(100) NOT NULL,
   `contrasena` varchar(255) NOT NULL,
   `nuevo` varchar(1) DEFAULT '1',
+  `rol_familiar` varchar(50) DEFAULT NULL,
+  `ingresos_aproximados` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `correo` (`correo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -215,7 +245,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Juan','juan@gmail.com','1234','0'),(2,'Sara','sara@gmail.com','1234','0'),(3,'Andrea','andrea@gmail.com','1234','1');
+INSERT INTO `usuarios` VALUES (1,'Juan','juan@gmail.com','1234','0','Padre/Madre',10000.00),(2,'Sara','sara@gmail.com','1234','0','Padre/Madre',10000.00),(3,'Andrea','andrea@gmail.com','1234','0','Independiente',8000.00);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -228,4 +258,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-03 22:20:12
+-- Dump completed on 2025-06-05  8:51:17
