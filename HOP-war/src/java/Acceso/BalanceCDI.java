@@ -35,6 +35,7 @@ public class BalanceCDI implements Serializable {
     private BigDecimal gastos;
     private BigDecimal balance;
     private String mensaje;
+    private BigDecimal aportes;
 
     @PostConstruct
     public void init() {
@@ -46,7 +47,8 @@ public class BalanceCDI implements Serializable {
     public void calcularBalance() {
         ingresos = balanceDAO.obtenerTotalIngresos(usuarioCDI.getUsuario());
         gastos = balanceDAO.obtenerTotalGastos(usuarioCDI.getUsuario());
-        balance = ingresos.subtract(gastos);
+        aportes = balanceDAO.obtenerTotalAportes(usuarioCDI.getUsuario());
+        balance = ingresos.subtract(gastos.add(aportes));
 
         BigDecimal porcentajeGastado = ingresos.compareTo(BigDecimal.ZERO) > 0
             ? gastos.multiply(BigDecimal.valueOf(100)).divide(ingresos, 2, RoundingMode.HALF_UP)
@@ -64,4 +66,9 @@ public class BalanceCDI implements Serializable {
     public BigDecimal getGastos() { return gastos; }
     public BigDecimal getBalance() { return balance; }
     public String getMensaje() { return mensaje; }
+
+    public BigDecimal getAportes() {
+        return aportes;
+    }
+    
 }

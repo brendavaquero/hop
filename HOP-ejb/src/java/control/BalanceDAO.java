@@ -33,4 +33,13 @@ public class BalanceDAO {
                  .setParameter("usuario", usuario)
                  .getSingleResult();
     }
+    
+    public BigDecimal obtenerTotalAportes(Usuarios usuario) {
+        return em.createQuery(
+            "SELECT COALESCE(SUM(a.montoAportado), 0) " +
+            "FROM AportesObjetivo a JOIN a.idObjetivo o " +
+            "WHERE o.idUsuario = :usuario", BigDecimal.class)
+            .setParameter("usuario", usuario)
+            .getSingleResult();
+    }
 }
