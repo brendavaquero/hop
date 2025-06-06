@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,6 +19,9 @@ import javax.inject.Inject;
 import modelo.CategoriasGenerales;
 import modelo.Gastos;
 import modelo.ResumenGastoDTO;
+import acceso.GastosFacade;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -33,9 +37,8 @@ public class ResumenGastosCDI implements Serializable {
     public ResumenGastosCDI() {
     }
     
-    /*@Inject
-    private ResumenGastosCDI resumenGastosCDI;
-*/
+    private Gastos nuevoGasto;
+
     
     //detalle individual de gastos
     @EJB
@@ -111,5 +114,44 @@ public class ResumenGastosCDI implements Serializable {
         return categoriaSeleccionada;
     }
 
+    public Gastos getNuevoGasto() {
+        if (nuevoGasto == null) {
+            nuevoGasto = new Gastos();
+        }
+        return nuevoGasto;
+    }
+    
+    /*public void prepararNuevoGasto() {
+        nuevoGasto = new Gastos();
+        nuevoGasto.setIdUsuario(usuarioCDI.getUsuario());
+        nuevoGasto.setIdCategoria(categoriaSeleccionada);
+        //cambiar
+        nuevoGasto.setFechaGasto(new Date());
+    }*/
 
+    public void prepararNuevoGasto(CategoriasGenerales categoria) {
+        this.categoriaSeleccionada = categoria;
+
+        nuevoGasto = new Gastos();
+        nuevoGasto.setIdUsuario(usuarioCDI.getUsuario());
+        nuevoGasto.setIdCategoria(categoria);
+        nuevoGasto.setFechaGasto(new Date());
+    }
+    @Inject
+    private GastosFacade gastosFacade; 
+
+    public void guardarGasto() {
+    if (nuevoGasto != null) {
+        gastosFacade.create(nuevoGasto);
+        //recargar desglose y resumen para reflejar el gasto recién registrado:
+        cargarResumen();
+        verDesglose(categoriaSeleccionada);
+        nuevoGasto = null;
+
+        FacesContext.getCurrentInstance().addMessage(null,
+            new FacesMessage(FacesMessage.SEVERITY_INFO, "Gasto registrado correctamente", ""));
+    }
+}
+
+    
 }

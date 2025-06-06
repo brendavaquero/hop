@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Registrar Gasto</title>
+</h:head>
+<h:body>
+
+    <h:form id="navegacion">
+        <h:outputText value="Hola, " />
+        <h:outputText value="#{usuarioCDI.usuario.nombre}" style="font-weight:bold;" />
+        &nbsp;|&nbsp;
+        <h:commandLink value="Menú principal" action="menu.xhtml?faces-redirect=true" />
+        &nbsp;|&nbsp;
+        <h:commandLink value="Cerrar sesión" action="#{loginCDI.cerrarSesion}" />
+    </h:form>
+
+    <h:form>
+        <h3>Registrar un nuevo gasto</h3>
+
+        <h:outputLabel for="categoria" value="Categoría:" />
+        <h:selectOneMenu id="categoria" value="#{registrarGastoCDI.nuevoGasto.idCategoria}" required="true">
+            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+            <f:selectItems value="#{registrarGastoCDI.categoriasDisponibles}" var="c"
+                           itemLabel="#{c.nombre}" itemValue="#{c}" />
+            <f:converter converterId="categoriasGeneralesConverter" />
+        </h:selectOneMenu>
+
+        <br/><br/>
+
+        <h:outputLabel for="fechaGasto" value="Fecha:" />
+        <h:inputText id="fechaGasto" value="#{registrarGastoCDI.nuevoGasto.fechaGasto}" required="true">
+            <f:convertDateTime pattern="yyyy-MM-dd" />
+        </h:inputText>
+
+        <br/><br/>
+
+        <h:outputLabel for="monto" value="Monto:" />
+        <h:inputText id="monto" value="#{registrarGastoCDI.nuevoGasto.monto}" required="true">
+            <f:validateDoubleRange minimum="0.01" />
+        </h:inputText>
+
+        <br/><br/>
+
+        <h:outputLabel for="descripcion" value="Descripción:" />
+        <h:inputText id="descripcion" value="#{registrarGastoCDI.nuevoGasto.descripcion}" />
+
+        <br/><br/>
+
+        <h:commandButton value="Guardar gasto" action="#{registrarGastoCDI.guardar}" />
+        <h:messages globalOnly="true" />
+        
+    </h:form>
+</h:body>
+</html>
