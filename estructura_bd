@@ -1,4 +1,5 @@
-
+CREATE DATABASE  IF NOT EXISTS `hop` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `hop`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: localhost    Database: hop
@@ -31,7 +32,7 @@ CREATE TABLE `aportes_objetivo` (
   PRIMARY KEY (`id_aporte`),
   KEY `id_objetivo` (`id_objetivo`),
   CONSTRAINT `aportes_objetivo_ibfk_1` FOREIGN KEY (`id_objetivo`) REFERENCES `objetivos_ahorro` (`id_objetivo`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `aportes_objetivo` (
 
 LOCK TABLES `aportes_objetivo` WRITE;
 /*!40000 ALTER TABLE `aportes_objetivo` DISABLE KEYS */;
-INSERT INTO `aportes_objetivo` VALUES (1,1,'2025-06-01 20:01:00',1000.00),(2,1,'2025-06-01 20:01:00',1500.00),(5,6,'2025-06-02 03:24:07',2500.00),(6,8,'2025-06-02 03:36:10',500.00),(7,9,'2025-06-02 05:00:39',550.00),(8,9,'2025-06-02 05:00:50',50.00),(9,11,'2025-06-02 07:02:35',200.00),(11,14,'2025-06-03 21:37:58',200.00);
+INSERT INTO `aportes_objetivo` VALUES (1,1,'2025-06-01 20:01:00',1000.00),(2,1,'2025-06-01 20:01:00',1500.00),(5,6,'2025-06-02 03:24:07',2500.00),(7,9,'2025-06-02 05:00:39',550.00),(8,9,'2025-06-02 05:00:50',50.00),(9,11,'2025-06-02 07:02:35',200.00),(11,14,'2025-06-03 21:37:58',200.00),(12,15,'2025-06-05 22:26:32',1000.00),(13,14,'2025-06-05 22:28:38',50.00),(14,15,'2025-06-06 01:34:15',500.00),(15,19,'2025-06-06 03:07:58',1000.00),(16,20,'2025-06-06 05:46:57',2000.00),(17,20,'2025-06-06 05:47:05',1000.00);
 /*!40000 ALTER TABLE `aportes_objetivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +116,7 @@ CREATE TABLE `gastos` (
   KEY `id_categoria` (`id_categoria`),
   CONSTRAINT `gastos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   CONSTRAINT `gastos_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categorias_generales` (`id_categoria`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +125,7 @@ CREATE TABLE `gastos` (
 
 LOCK TABLES `gastos` WRITE;
 /*!40000 ALTER TABLE `gastos` DISABLE KEYS */;
-INSERT INTO `gastos` VALUES (1,1,1,'2024-03-05',250.00,'Supermercado'),(2,1,1,'2024-03-15',100.00,'Cena'),(3,1,2,'2024-03-10',60.00,'Taxi'),(4,1,3,'2024-03-12',80.00,'Cine'),(5,1,1,'2024-04-02',300.00,'Compra mensual'),(6,1,2,'2024-04-05',90.00,'Transporte público'),(7,2,1,'2024-03-03',200.00,'Restaurante'),(8,2,4,'2024-03-06',150.00,'Medicinas'),(9,1,1,'2025-05-01',3000.00,'Despensa');
+INSERT INTO `gastos` VALUES (1,1,1,'2024-03-05',250.00,'Supermercado'),(2,1,1,'2024-03-15',100.00,'Cena'),(3,1,2,'2024-03-10',60.00,'Taxi'),(4,1,3,'2024-03-12',80.00,'Cine'),(5,1,1,'2024-04-02',300.00,'Compra mensual'),(6,1,2,'2024-04-05',90.00,'Transporte público'),(7,2,1,'2024-03-03',200.00,'Restaurante'),(8,2,4,'2024-03-06',150.00,'Medicinas'),(9,1,1,'2025-05-01',3000.00,'Despensa'),(10,2,5,'2025-06-05',1000.00,'Curso '),(11,2,1,'2024-03-05',250.00,'comida');
 /*!40000 ALTER TABLE `gastos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +145,7 @@ CREATE TABLE `ingresos` (
   PRIMARY KEY (`id_ingreso`),
   KEY `fk_usuario_ingreso` (`id_usuario`),
   CONSTRAINT `fk_usuario_ingreso` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +154,7 @@ CREATE TABLE `ingresos` (
 
 LOCK TABLES `ingresos` WRITE;
 /*!40000 ALTER TABLE `ingresos` DISABLE KEYS */;
-INSERT INTO `ingresos` VALUES (1,1,10000.00,'2025-05-01','Sueldo mayo'),(2,1,500.00,'2025-05-15','Venta de artículos'),(3,1,10500.00,'2025-06-01','Sueldo junio'),(4,2,12000.00,'2025-06-01','Sueldo junio'),(5,2,1500.00,'2025-06-10','Freelance'),(6,2,800.00,'2025-05-05','Apoyo familiar'),(7,3,9000.00,'2025-04-30','Sueldo abril'),(8,3,9500.00,'2025-05-30','Sueldo mayo'),(9,3,9700.00,'2025-06-01','Sueldo junio');
+INSERT INTO `ingresos` VALUES (1,1,10000.00,'2025-05-01','Sueldo mayo'),(2,1,500.00,'2025-05-15','Venta de artículos'),(3,1,10500.00,'2025-06-01','Sueldo junio'),(4,2,12000.00,'2025-06-01','Sueldo junio'),(5,2,1500.00,'2025-06-10','Freelance'),(6,2,800.00,'2025-05-05','Apoyo familiar'),(7,3,9000.00,'2025-04-30','Sueldo abril'),(8,3,9500.00,'2025-05-30','Sueldo mayo'),(9,3,9700.00,'2025-06-01','Sueldo junio'),(10,3,3000.00,'2025-06-04','Beca'),(11,3,1000.00,'2025-06-04','Semana'),(12,2,3000.00,'2025-06-04','Beca'),(13,1,4000.00,'2025-06-02','prueba');
 /*!40000 ALTER TABLE `ingresos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +175,7 @@ CREATE TABLE `limites_categoria_usuario` (
   KEY `id_categoria` (`id_categoria`),
   CONSTRAINT `limites_categoria_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   CONSTRAINT `limites_categoria_usuario_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categorias_generales` (`id_categoria`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +184,7 @@ CREATE TABLE `limites_categoria_usuario` (
 
 LOCK TABLES `limites_categoria_usuario` WRITE;
 /*!40000 ALTER TABLE `limites_categoria_usuario` DISABLE KEYS */;
-INSERT INTO `limites_categoria_usuario` VALUES (1,1,1,1000.00),(2,1,2,500.00),(3,1,3,300.00),(4,2,1,800.00),(5,2,4,600.00);
+INSERT INTO `limites_categoria_usuario` VALUES (1,1,1,1000.00),(2,1,2,500.00),(3,1,3,300.00),(4,2,1,800.00),(5,2,4,600.00),(6,1,4,1000.00),(7,1,5,5000.00),(8,2,3,1000.00),(9,2,2,2000.00),(10,7,1,3000.00);
 /*!40000 ALTER TABLE `limites_categoria_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +207,7 @@ CREATE TABLE `objetivos_ahorro` (
   PRIMARY KEY (`id_objetivo`),
   KEY `id_usuario` (`id_usuario`),
   CONSTRAINT `objetivos_ahorro_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +216,7 @@ CREATE TABLE `objetivos_ahorro` (
 
 LOCK TABLES `objetivos_ahorro` WRITE;
 /*!40000 ALTER TABLE `objetivos_ahorro` DISABLE KEYS */;
-INSERT INTO `objetivos_ahorro` VALUES (1,1,'Vacaciones','Ahorro para viaje en diciembre',10000.00,2500.00,'2025-01-01','2025-12-15'),(3,1,'Viaje','2025',10000.00,0.00,'2025-05-31','2025-07-31'),(4,1,'Vacaciones','2025',10000.00,0.00,'2025-05-31','2025-08-10'),(5,1,'Vacaciones2','2026',10000.00,0.00,'2025-05-31','2025-08-10'),(6,2,'Prueba','Prueba 1',3000.00,2500.00,'2025-05-31','2025-08-10'),(8,2,'Viaje','Viaje 2026',8000.00,500.00,'2025-06-30','2025-11-30'),(9,2,'Viaje 2','2027',8000.00,600.00,'2025-06-30','2025-11-30'),(11,2,'Navidad','2025',3000.00,200.00,'2025-06-30','2025-11-30'),(12,2,'Sara','prueba',4000.00,0.00,'2025-06-30','2025-11-30'),(14,1,'Juan','pruebs',3000.00,200.00,'2025-06-30','2025-11-30'),(15,1,'Laptop','Comprar nueva',8000.00,0.00,'2025-06-30','2025-11-30');
+INSERT INTO `objetivos_ahorro` VALUES (1,1,'Vacaciones','Ahorro para viaje en diciembre',10000.00,2500.00,'2025-01-01','2025-12-15'),(3,1,'Viaje','2025',10000.00,0.00,'2025-05-31','2025-07-31'),(4,1,'Vacaciones','2025',10000.00,0.00,'2025-05-31','2025-08-10'),(5,1,'Vacaciones2','2026',10000.00,0.00,'2025-05-31','2025-08-10'),(6,2,'Prueba','Prueba 1',3000.00,2500.00,'2025-05-31','2025-08-10'),(9,2,'Viaje 2','2027',8000.00,600.00,'2025-06-30','2025-11-30'),(11,2,'Navidad','2025',3000.00,200.00,'2025-06-30','2025-11-30'),(12,2,'Sara','prueba',4000.00,0.00,'2025-06-30','2025-11-30'),(14,1,'Juan','pruebs',3000.00,250.00,'2025-06-30','2025-11-30'),(15,1,'Laptop','Comprar nueva',8000.00,1500.00,'2025-06-30','2025-11-30'),(17,1,'Juan 3','prueba',3000.00,0.00,'2025-06-30','2025-11-30'),(19,4,'Auto','Comprar auto nuevo',100000.00,1000.00,'2025-06-30','2025-11-30'),(20,2,'Auto','auto nuevo',89000.00,3000.00,'2025-06-30','2025-11-30');
 /*!40000 ALTER TABLE `objetivos_ahorro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,9 +235,11 @@ CREATE TABLE `usuarios` (
   `nuevo` varchar(1) DEFAULT '1',
   `rol_familiar` varchar(50) DEFAULT NULL,
   `ingresos_aproximados` decimal(10,2) DEFAULT NULL,
+  `fecha_nacimiento` date DEFAULT NULL,
+  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `correo` (`correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +248,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Juan','juan@gmail.com','1234','0','Padre/Madre',10000.00),(2,'Sara','sara@gmail.com','1234','0','Padre/Madre',10000.00),(3,'Andrea','andrea@gmail.com','1234','0','Independiente',8000.00);
+INSERT INTO `usuarios` VALUES (1,'Juan','juan@gmail.com','1234','0','Padre/Madre',10000.00,'1980-12-12','2025-03-06 02:41:33'),(2,'Sara','sara@gmail.com','1234','0','Padre/Madre',10000.00,'1990-11-05','2025-03-06 02:50:12'),(3,'Andrea','andrea@gmail.com','1234','0','Hijo/Hija',2000.00,'2002-04-21','2025-04-05 14:11:03'),(4,'Tania Cruz','tania@gmail.com','1234','0','Independiente',9000.00,'2000-03-11',NULL),(5,'test','test@gmail.com','1234','1',NULL,NULL,'2000-12-11','2025-06-06 03:06:32'),(6,'Ronaldo','ron@gmail.com','1234','1','Hijo/Hija',5000.00,'2001-12-11','2025-06-06 05:36:52'),(7,'laura','laura@gmail.com','1234','0','Independiente',8000.00,'2000-10-09','2025-06-06 05:50:08');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -258,4 +261,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-05  8:51:17
+-- Dump completed on 2025-06-06  0:13:46
